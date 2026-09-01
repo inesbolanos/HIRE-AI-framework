@@ -1,0 +1,22 @@
+# Local config (copy from config.example.yaml)
+config.yaml
+
+# Local database holding the pipeline's tables (regenerate by re-running ingest)
+*.db
+*.sqlite
+*.sqlite3
+
+# Step 5 BERTopic models
+bertopic_models/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# OS
+.DS_Store
+*.code-workspace

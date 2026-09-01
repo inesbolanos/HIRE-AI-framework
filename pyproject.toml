@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hire-ai-framework"
+version = "0.1.0"
+description = "H.I.R.E. — Python pipeline that turns agent conversations into product insights"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "pandas>=2.0",
+    "PyYAML>=6.0",
+    "python-dotenv>=1.0",
+    "SQLAlchemy>=2.0",  # the pipeline's tables are database tables (SQLite by default)
+]
+
+[project.optional-dependencies]
+discovery = ["bertopic>=0.16", "umap-learn>=0.5", "hdbscan>=0.8", "scikit-learn>=1.3", "numpy>=1.24"]
+# For a warehouse, also install your platform's SQLAlchemy dialect
+# (e.g. databricks-sqlalchemy, snowflake-sqlalchemy).
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+hire = "hire_pipeline.pipeline:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
