@@ -1,0 +1,144 @@
+# The agent's contract. Edit this file to adapt H.I.R.E. AI framework to your own
+# agent, no code changes needed. The category names here are the single source of
+# truth: the deterministic router, the LLM prompts, and the metrics all read from
+# them. Referenced from config.yaml via 'taxonomy_file:'.
+#
+# The example models a fraud / banking support agent and matches the shipped sample
+# dataset. All example messages are synthetic, never paste production transcripts
+# that could contain customer names, PII, or secrets.
+
+# Short description of the agent, woven into the classification prompts.
+agent_description: "fraud / banking support agent"
+
+# USER intent categories (name: description)
+# 'other' is always allowed, the residual that flows to Step 5 discovery.
+input_labels:
+  report_unauthorized_transaction: "Reports a charge/transaction they did not make or authorize ('someone used my card', 'unauthorized charge on my statement')."
+  report_phishing: "Reports a suspicious email, text, or message asking for account info or credentials."
+  report_account_takeover: "Reports that someone gained access to / took over their account ('unauthorized access', 'someone changed my password')."
+  report_lost_stolen_card: "Reports a physically lost or stolen card, or stolen card details."
+  dispute_transaction: "Explicitly asks to dispute a specific, already-identified transaction."
+  check_refund_status: "Asks about the status, timing, or amount of a refund/reimbursement for fraud already reported."
+  provide_transaction_details: "Supplies details the agent asked for (merchant, amount, or date) without itself being a new report ('The charge was from Walmart', 'It happened on March 20th')."
+  confirm_acknowledge: "Agrees, confirms, or says they'll do something ('correct, I never made this purchase', 'sure, I'll do that')."
+  correction: "Corrects a mistake the agent made ('no, that's wrong, I said March 15th not March 5th'). Distinct from provide_transaction_details: it is fixing the agent, not answering a question."
+  request_human_or_escalation: "Asks for a human agent, a supervisor, or to escalate/complain about handling."
+  end_conversation: "Signals they are done ('no, that's all', 'that's everything, thanks')."
+  test_or_noise: "Greetings, tests, or filler ('hi', 'test', 'asdf'): not a real request."
+  other: "A real request/utterance that fits none of the categories above: e.g. open-ended reassurance-seeking ('is my money safe?'), general how-long-does-this-take questions, or out-of-scope asks (leave here rather than force-fit)."
+
+# AGENT response categories (name: description)
+output_labels:
+  gather_information: "Asks the user for information needed to proceed (which card/transaction, amount, date, merchant)."
+  confirm_action_taken: "Confirms a concrete account action was taken (card blocked, dispute filed, charge reversed, account secured, replacement issued)."
+  security_recommendation: "Advises a protective step (change password, enable 2FA) without necessarily performing it."
+  request_evidence: "Asks the user to forward/provide evidence (e.g. forward the suspicious email to the fraud team)."
+  reassurance_appropriate: "Offers measured, honest reassurance ('we'll investigate and keep you updated') without guaranteeing an outcome."
+  overpromise_guarantee: "Guarantees an outcome the agent cannot promise ('100% you'll get your money back'). A compliance red line: track it."
+  acknowledge_correction: "Acknowledges and accepts a user's correction ('you're right, my mistake')."
+  clarifying_question: "Asks a clarifying question before acting, other than routine info-gathering."
+  closing: "Wraps up / asks if there's anything else."
+  deflection_refusal: "Refuses or deflects ('I can't help with that')."
+  capability_or_data_gap: "Says it can't help because a feature/data isn't available."
+  other: "A substantive reply that fits none of the categories above (leave here rather than force-fit)."
+
+# USER tone labels (emotion-focused)
+tone_labels:
+  angry: "Hostile or blaming: harsh words, ALL-CAPS, or profanity aimed at the situation/agent."
+  anxious: "Worried or stressed about impact/consequences, but NOT hostile ('is my money safe?', 'this is really bad')."
+  calm: "Composed and measured; no time pressure or emotional charge."
+  satisfied: "Pleased or appreciative ('thanks, that worked', 'perfect')."
+  frustrated: "Annoyed or impatient that things aren't working: milder than angry ('this is the third time I've told you')."
+  neutral: "Plain, matter-of-fact, no discernible emotion (most operational messages)."
+  other: "A tone that fits none of the above."
+
+# Few-shot examples for confused pairs
+# Adding a corrected example is the fastest way to fix a specific confusion.
+input_examples:
+  - text: "Someone used my card without permission."
+    category: report_unauthorized_transaction
+    reason: "A new report of an unauthorized charge: even though typed as free text, not a button."
+  - text: "I received a suspicious email asking for my account information."
+    category: report_phishing
+    reason: "Reports a phishing attempt, not a transaction dispute."
+  - text: "The charge was from Walmart."
+    category: provide_transaction_details
+    reason: "Supplies a merchant detail the agent asked for, not a new report."
+  - text: "No, that's wrong. I said March 15th, not March 5th."
+    category: correction
+    reason: "Fixes an agent mistake; it is not merely providing a date."
+  - text: "Will I be refunded for this fraud?"
+    category: other
+    reason: "An outcome question / reassurance-seeking, not a report or a refund-status check on something already filed."
+  - text: "This is the third time I've told you, March 20th!"
+    category: provide_transaction_details
+    reason: "Still supplying the date; the frustration belongs in tone, not the category."
+  - text: "No, that's all. Thanks for your help."
+    category: end_conversation
+    reason: "Signals the conversation is over."
+  - text: "Can I talk to a real person about how this was handled?"
+    category: request_human_or_escalation
+    reason: "Asks for a human / to escalate, distinct from a fraud report."
+
+output_examples:
+  - text: "100% you'll get your money back. I promise you'll receive the full amount."
+    category: overpromise_guarantee
+    reason: "Guarantees an outcome the agent cannot promise, a compliance red line."
+  - text: "I recommend changing your password as a precaution."
+    category: security_recommendation
+    reason: "Advises a protective step rather than confirming an action was taken."
+  - text: "I'm blocking that card now and issuing a replacement."
+    category: confirm_action_taken
+    reason: "Confirms a concrete account action."
+
+# Deterministic routing (Step 1): the structured contract
+rules:
+  # user control id (menu_id / button_id / form_id) -> user category
+  user_controls:
+    report_fraud: other   # generic "Report Fraud" menu entry: no specific intent yet
+    qr_unauth_txn: report_unauthorized_transaction
+    qr_phishing: report_phishing
+    qr_ato: report_account_takeover
+    qr_lost_card: report_lost_stolen_card
+    qr_refund_status: check_refund_status
+    btn_talk_to_human: request_human_or_escalation
+    form_dispute: dispute_transaction
+    qr_end: end_conversation
+  # agent action id -> agent action category
+  agent_actions:
+    block_card: card_blocked
+    file_dispute: dispute_filed
+    secure_account: account_secured
+    initiate_refund: refund_initiated
+    escalate_to_human: escalated_to_human
+  # which agent action(s) resolve each user intent (drives resolution_status)
+  intent_resolving_actions:
+    report_unauthorized_transaction: [dispute_filed, refund_initiated]
+    dispute_transaction: [dispute_filed]
+    report_phishing: [account_secured]
+    report_account_takeover: [account_secured, card_blocked]
+    report_lost_stolen_card: [card_blocked]
+    request_human_or_escalation: [escalated_to_human]
+    check_refund_status: []
+
+# Agent metrics (Step 6): deterministic evaluation config. Adapt per agent.
+metrics:
+  # User Correction Rate (UCR)
+  # User categories that mean "the user corrected the agent"
+  correction_categories: [correction]
+
+  # Do It Yourself Rate (DIY)
+  # User tones that signal frustration. Must match tone_labels.
+  frustration_tones: [frustrated, angry]
+  # User categories that mean "gave up on the agent"
+  escalation_categories: [request_human_or_escalation]
+
+  # Red Line Rate (RLR)
+  # Agent output categories that count as a compliance red line.
+  red_line_categories: [overpromise_guarantee]
+  # Regexes over the agent's reply that flag a security breach (matched
+  # case-insensitively): sharing card numbers, passwords, PINs, CVV, SSNs, etc.
+  red_line_patterns:
+    - '(?:\d[ -]?){13,16}'                                       # card-number-like digit runs
+    - '\b(password|passcode|pin|cvv|cvc|otp|one[- ]?time code)\b\s*(is|:|=)\s*\S'
+    - '\b(ssn|social security(?: number)?)\b\s*(is|:|=)?\s*\d'

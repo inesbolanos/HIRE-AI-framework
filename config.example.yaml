@@ -1,0 +1,109 @@
+# H.I.R.E. AI analytics pipeline configuration.
+# Copy to config.yaml and edit. The only secret is the warehouse connection URL,
+# which comes from the environment (.env) — never put it in this file.
+
+# The agent's vocabulary + deterministic contract (labels, tones, few-shots,
+# routing maps). Edit that file to adapt the framework to your agent. Path is
+# resolved relative to this config file.
+taxonomy_file: taxonomy.yaml
+
+# Where the pipeline's own tables live (its stage outputs, not your source data).
+# Always a database: these are analytical tables you will want to query and trend.
+#
+# url_env names the environment variable holding a SQLAlchemy URL, so the
+# connection string is never committed. Point it at your data warehouse: ideally
+# the same one running the models below, so data and model share a platform:
+#   Databricks   databricks://token:<pat>@<host>?http_path=<path>&catalog=<cat>&schema=<sch>
+#   Snowflake    snowflake://<user>:<pw>@<account>/<db>/<schema>
+#   Postgres     postgresql+psycopg://user:pw@host/db
+#
+# Note for Databricks: http_path is a QUERY PARAMETER (not a path segment), and
+# catalog/schema are required. <host> carries no https:// prefix, and <path> is
+# the SQL warehouse's HTTP path — ai_query needs a SQL warehouse, not an
+# all-purpose cluster.
+#
+# If that variable is unset, default_url is used: a local SQLite file, which is a
+# real database needing no server and no credentials: enough to run the sample
+# data end to end.
+storage:
+  url_env:     HIRE_STORE_URL      # env var holding the SQLAlchemy URL
+  default_url: sqlite:///hire.db   # fallback: local file, zero setup
+  schema:      ""                  # optional: schema/database to create the tables in
+
+# Pipeline stages: each is one table in the database above. This block is a map
+# of the pipeline; the unique id is interaction_id, and each row is a single
+# interaction between a user (input) and an agent (output).
+#
+# Names are SQL identifiers: the step-numbered ones keep the stages in pipeline
+# order when you list the schema, and read cleanly in a query
+# Rename them freely (they are quoted with your dialect's rules either way) 
+# and use storage.schema above to keep them together in a shared warehouse.
+# Exceptions to the numbering: the landing table (an input, not a stage output)
+# and the metric snapshots (appended by several steps, not owned by one).
+tables:
+  source:               raw_agent_interactions       # raw interactions, loaded as-is.
+  deterministic:        step1_deterministic_labels   # Step 1: interactions that deterministic rules can categorize.
+  classified:           step2_llm_classified         # Step 2: LLM classifies the remaining interactions as a known category the rules missed, or 'other' (+ tone, confidence, reason)
+  escalation:           step2_llm_escalation         # Step 2: low-confidence classifications re-checked by a stronger model.
+  audit:                step3_other_audit            # Step 3: LLM audit of the 'other' bucket. Resolved: back into known category. Unresolved: escalated to the HITL queue. Unknown: other.
+  review:               step4_human_review_queue     # Step 4: whatever the models still can't resolve (low-confidence + unresolved 'other'), sent to the HITL queue for a human.
+  topics:               step5_emergent_topics        # Step 5: emergent topic summary.
+  topic_map:            step5_topic_mapping          # Step 5: per-message topic assignment.
+  conversation_metrics: step6_conversation_metrics   # Step 6: per-conversation agent-metric flags
+  metrics:              metric_snapshots             # cross-cutting: metric time series appended by Steps 1-6
+
+# Step 1: deterministic rules
+deterministic:
+  input_category:        input_category       # rule-assigned category (user) or the freeform label
+  output_category:       output_category      # rule-assigned category (agent) or the freeform label
+  freeform_input_label:  manual_user_input    # label for user messages no rule matched
+  freeform_output_label: freeform_response    # label for agent replies no rule matched
+
+# Steps 2-5: the models, run INSIDE your data warehouse.
+#
+# The warehouse holds the model entitlement, so your workspace credentials are the authentication. 
+# The conversation data never leaves the platform, and a whole batch of messages is one query.
+#
+# Steps 1 and 6 need no model and no connection at all: `ingest`, `metrics` and
+# `agent-metrics` work with this section untouched.
+#
+# Pick your platform
+# sql_template is your platform's LLM function. {model} is filled from
+# classifier/judge below; {input} is the prompt column. Uncomment one, and set
+# classifier/judge to the model or endpoint names your platform uses.
+#
+#   Databricks    sql_template: "ai_query('{model}', {input})"
+#                 classifier:   databricks-claude-sonnet-4-6
+#                 judge:        databricks-claude-opus-4-5
+#
+#   Snowflake     sql_template: "SNOWFLAKE.CORTEX.COMPLETE('{model}', {input})"
+#                 classifier:   claude-sonnet-4-6
+#                 judge:        claude-opus-4-6
+#
+# Another platform? Any scalar SQL function of the form FN(model, prompt) works.
+# See the README table ("Running it in your data warehouse") for how to adapt one,
+# and verify your platform's current signature: these have been moving targets.
+#
+# Needs SQLAlchemy + your platform driver:  pip install -e '.[sql]'
+models:
+  sql_template: ""            # REQUIRED: your platform's LLM function (see above)
+  sql_url_env:  HIRE_SQL_URL  # env var holding the SQLAlchemy connection URL
+  classifier:   ""            # REQUIRED: cheap model for the Step 2 first pass
+  judge:        ""            # REQUIRED: stronger model for escalation, audit, naming
+
+# Steps 2-5: batching & thresholds
+run:
+  batch_size:            100      # messages processed before progress is saved
+  max_chars:             4000     # truncate long text to control tokens
+  confidence_threshold:  0.6      # min AI confidence (0-1) to auto-accept classification; below this -> escalate, then HITL queue
+  max_retries:           3        # retry a failed AI request up to this many times
+  language_hint: "The text may be in English or Japanese."  # languages the AI should expect
+
+# Step 5: clustering (BERTopic)
+discovery:
+  cluster_min_size:       5       # HDBSCAN min_cluster_size: how many similar messages it takes to form a topic (smaller groups are ignored as noise)
+  hdbscan_min_samples:    1       # how confident it must be to put a message in a theme. Higher = stricter (more left as "other"). Lower = more get grouped.
+  umap_n_neighbors:       15      # how much surrounding context to weigh. Higher = broader topics. Lower = finer, more specific topics.
+  umap_seed:              42      # fixed number so every run produces the same themes (reproducibility); change it to reshuffle.
+  refit_outlier_threshold: 0.30   # warning to readjust when outlier share exceeds this threshold.
+  model_dir: ./bertopic_models    # where to store the BERTopic model artifacts so later runs can reuse it.
