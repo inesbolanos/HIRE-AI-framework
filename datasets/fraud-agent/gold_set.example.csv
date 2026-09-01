@@ -1,0 +1,219 @@
+interaction_id,text,gold_category
+int_000001,"The charge was $35, made on April 2nd.",provide_transaction_details
+int_000003,It was a $99 purchase at Target.,provide_transaction_details
+int_000005,The date on the charge is January 28th.,provide_transaction_details
+int_000006,The date on the charge is February 11th.,provide_transaction_details
+int_000007,That charge was from Steam.,provide_transaction_details
+int_000009,"It occurred on February 11th, around 3pm.",provide_transaction_details
+int_000010,It shows up as 'Best Buy' on my statement.,provide_transaction_details
+int_000011,The transaction was for $575.,provide_transaction_details
+int_000012,"It occurred on March 15th, around 3pm.",provide_transaction_details
+int_000014,It was $113 at Steam.,provide_transaction_details
+int_000015,"It occurred on April 2nd, around 3pm.",provide_transaction_details
+int_000017,It happened on March 20th.,provide_transaction_details
+int_000019,The merchant was Apple and it was $714.,provide_transaction_details
+int_000024,I already gave you that: $262 at Walmart. Are you listening?,provide_transaction_details
+int_000025,It was a $448 purchase at Target.,provide_transaction_details
+int_000027,It was a payment to Amazon on March 15th.,provide_transaction_details
+int_000028,"The charge was $620, made on March 15th.",provide_transaction_details
+int_000029,It was a payment to Target on January 28th.,provide_transaction_details
+int_000030,"The charge was $778, made on April 2nd.",provide_transaction_details
+int_000032,It was a payment to Amazon on April 2nd.,provide_transaction_details
+int_000034,The merchant was Steam and it was $664.,provide_transaction_details
+int_000036,The date on the charge is April 2nd.,provide_transaction_details
+int_000038,The merchant was Walmart and it was $69.,provide_transaction_details
+int_000041,Again: the charge was $281. Why is this so hard?,provide_transaction_details
+int_000042,It was $783 at Target.,provide_transaction_details
+int_000043,Again: the charge was $392. Why is this so hard?,provide_transaction_details
+int_000044,It happened on March 15th.,provide_transaction_details
+int_000045,It was $235 at Target.,provide_transaction_details
+int_000046,It was $42 at Amazon.,provide_transaction_details
+int_000048,It was $145 at Target.,provide_transaction_details
+int_000050,The transaction was for $106.,provide_transaction_details
+int_000051,I already gave you that: $894 at Uber. Are you listening?,provide_transaction_details
+int_000052,"The charge was $72, made on February 11th.",provide_transaction_details
+int_000055,It was a payment to Walmart on February 11th.,provide_transaction_details
+int_000058,"This is the third time I've told you, it was March 15th!",provide_transaction_details
+int_000059,That charge was from Uber.,provide_transaction_details
+int_000060,It was a $579 purchase at Steam.,provide_transaction_details
+int_000062,It was a $72 purchase at Target.,provide_transaction_details
+int_000063,The date on the charge is March 20th.,provide_transaction_details
+int_000065,It shows up as 'Amazon' on my statement.,provide_transaction_details
+int_000093,A $322 withdrawal came out that wasn't me.,report_unauthorized_transaction
+int_000094,There are charges from Best Buy — I've never shopped there.,report_unauthorized_transaction
+int_000095,There are charges from Apple — I've never shopped there.,report_unauthorized_transaction
+int_000097,Money was taken from my account without my permission.,report_unauthorized_transaction
+int_000099,I noticed several purchases I didn't authorize this month.,report_unauthorized_transaction
+int_000100,I found a fraudulent charge on my latest bill.,report_unauthorized_transaction
+int_000101,There's a charge on my account I never authorized.,report_unauthorized_transaction
+int_000102,There's a $835 charge from Target I never made.,report_unauthorized_transaction
+int_000105,Someone charged $317 to my card at Apple.,report_unauthorized_transaction
+int_000109,Someone made a purchase with my card that I didn't approve.,report_unauthorized_transaction
+int_000111,A $228 withdrawal came out that wasn't me.,report_unauthorized_transaction
+int_000114,This $353 charge from Target isn't mine.,report_unauthorized_transaction
+int_000116,There's a $260 charge from Amazon I never made.,report_unauthorized_transaction
+int_000119,A $259 withdrawal came out that wasn't me.,report_unauthorized_transaction
+int_000121,There are charges from Walmart — I've never shopped there.,report_unauthorized_transaction
+int_000122,Someone charged $146 to my card at Uber.,report_unauthorized_transaction
+int_000131,Someone charged $164 to my card at Walmart.,report_unauthorized_transaction
+int_000133,There are charges from Uber — I've never shopped there.,report_unauthorized_transaction
+int_000138,There are charges from Steam — I've never shopped there.,report_unauthorized_transaction
+int_000141,There's a $354 charge from Uber I never made.,report_unauthorized_transaction
+int_000142,I see an unauthorized $556 payment to Target.,report_unauthorized_transaction
+int_000143,There's a $668 charge from Amazon I never made.,report_unauthorized_transaction
+int_000145,My statement shows a $475 payment I never agreed to.,report_unauthorized_transaction
+int_000147,A $777 withdrawal came out that wasn't me.,report_unauthorized_transaction
+int_000149,This $782 charge from Amazon isn't mine.,report_unauthorized_transaction
+int_000153,My statement shows a $630 payment I never agreed to.,report_unauthorized_transaction
+int_000155,Someone charged $36 to my card at Target.,report_unauthorized_transaction
+int_000157,This $114 charge from Walmart isn't mine.,report_unauthorized_transaction
+int_000159,This $80 charge from Best Buy isn't mine.,report_unauthorized_transaction
+int_000161,A $453 withdrawal came out that wasn't me.,report_unauthorized_transaction
+int_000103,I noticed several purchases I didn't authorize this month.,report_unauthorized_transaction
+int_000107,There are charges from Apple — I've never shopped there.,report_unauthorized_transaction
+int_000112,I noticed several purchases I didn't authorize this month.,report_unauthorized_transaction
+int_000118,Money was taken from my account without my permission.,report_unauthorized_transaction
+int_000123,Money was taken from my account without my permission.,report_unauthorized_transaction
+int_000124,Money was taken from my account without my permission.,report_unauthorized_transaction
+int_000166,Is there a way to prevent this in the future?,other
+int_000168,Can you also help me open a new account?,other
+int_000170,What should I do to protect myself going forward?,other
+int_000174,Is my money safe right now?,other
+int_000176,What happens to my credit score after fraud?,other
+int_000178,I'm just really stressed about all of this.,other
+int_000189,Will this affect my other cards?,other
+int_000197,Why did this even happen to me?,other
+int_000200,Do I need to file a police report too?,other
+int_000209,I just want to make sure everything is okay now.,other
+int_000222,Can you explain how this fraud occurred?,other
+int_000223,How long do fraud investigations usually take?,other
+int_000172,Can you also help me open a new account?,other
+int_000180,I'm just really stressed about all of this.,other
+int_000181,What should I do to protect myself going forward?,other
+int_000183,What should I do to protect myself going forward?,other
+int_000184,What happens to my credit score after fraud?,other
+int_000186,What happens to my credit score after fraud?,other
+int_000187,What happens to my credit score after fraud?,other
+int_000188,What should I do to protect myself going forward?,other
+int_000190,Will this affect my other cards?,other
+int_000192,Will this affect my other cards?,other
+int_000194,Is there a way to prevent this in the future?,other
+int_000196,Is there a way to prevent this in the future?,other
+int_000199,Will this affect my other cards?,other
+int_000201,Is there a way to prevent this in the future?,other
+int_000202,Can you also help me open a new account?,other
+int_000204,Can you also help me open a new account?,other
+int_000206,Will this affect my other cards?,other
+int_000208,Why did this even happen to me?,other
+int_000226,Someone is impersonating the bank to get my credentials.,report_phishing
+int_000228,A caller claimed to be from the bank and asked for my PIN.,report_phishing
+int_000229,An email asked me to reset my password on a strange site.,report_phishing
+int_000231,Someone texted me pretending to be my bank.,report_phishing
+int_000232,I got a suspicious email asking me to confirm my password.,report_phishing
+int_000234,I think a phishing text is trying to steal my info.,report_phishing
+int_000235,There's an email asking me to click a link to verify my login.,report_phishing
+int_000237,A text told me to call a number to 'unlock' my account.,report_phishing
+int_000241,Someone emailed me asking for my card details.,report_phishing
+int_000243,I received a scam message wanting my account number.,report_phishing
+int_000257,I got a fake message about my account being locked.,report_phishing
+int_000268,I got a message saying I won a prize if I share my login.,report_phishing
+int_000239,There's an email asking me to click a link to verify my login.,report_phishing
+int_000242,Someone texted me pretending to be my bank.,report_phishing
+int_000245,Someone emailed me asking for my card details.,report_phishing
+int_000247,Someone emailed me asking for my card details.,report_phishing
+int_000248,I received a scam message wanting my account number.,report_phishing
+int_000249,Someone emailed me asking for my card details.,report_phishing
+int_000250,I got a suspicious email asking me to confirm my password.,report_phishing
+int_000252,Someone is impersonating the bank to get my credentials.,report_phishing
+int_000269,I'm checking on the refund for the fraud I reported.,check_refund_status
+int_000271,What's the ETA on my chargeback refund?,check_refund_status
+int_000273,When will my refund come through?,check_refund_status
+int_000275,How long until I get my money back?,check_refund_status
+int_000279,Is my refund still being processed?,check_refund_status
+int_000287,When should I expect the refunded $18?,check_refund_status
+int_000290,Any update on my reimbursement?,check_refund_status
+int_000292,Did the refund for the Steam charge go through?,check_refund_status
+int_000295,What's the status of the refund I was promised?,check_refund_status
+int_000277,What's the ETA on my chargeback refund?,check_refund_status
+int_000278,How long until I get my money back?,check_refund_status
+int_000281,What's the ETA on my chargeback refund?,check_refund_status
+int_000283,I'm checking on the refund for the fraud I reported.,check_refund_status
+int_000284,Is my refund still being processed?,check_refund_status
+int_000285,Is my refund still being processed?,check_refund_status
+int_000288,When will my refund come through?,check_refund_status
+int_000300,"No, my account number ends in 42, not 24.",correction
+int_000301,"You misheard me — I said my debit card, not credit.",correction
+int_000302,You got the merchant wrong — it was Steam.,correction
+int_000303,"No, that's wrong — the date was March 15th, not what you said.",correction
+int_000304,"No, please fix that — the date was February 11th.",correction
+int_000306,"No, that's wrong — the date was April 2nd, not what you said.",correction
+int_000307,"No, please fix that — the date was April 2nd.",correction
+int_000309,"No, I never said that; let me correct you.",correction
+int_000311,You got the merchant wrong — it was Uber.,correction
+int_000312,"That's not right — it was Uber, not the one you named.",correction
+int_000316,"Correction: it was two charges, not one.",correction
+int_000318,"Actually, the amount was $853, not what you read out.",correction
+int_000322,"That's a mistake — I reported phishing, not a lost card.",correction
+int_000323,"That's incorrect — the charge was yesterday, not last week.",correction
+int_000324,"No, that's wrong — the date was March 20th, not what you said.",correction
+int_000326,"No, please fix that — the date was March 20th.",correction
+int_000333,Can a real agent handle this instead?,request_human_or_escalation
+int_000334,I'm done with this bot. Put a real person on.,request_human_or_escalation
+int_000336,Can I speak to a real person?,request_human_or_escalation
+int_000338,I need to speak with a manager about this.,request_human_or_escalation
+int_000340,I'd really like to speak to someone in charge.,request_human_or_escalation
+int_000341,This isn't working — please get me a human.,request_human_or_escalation
+int_000345,Please escalate my case to a specialist.,request_human_or_escalation
+int_000347,"Get me a human, please.",request_human_or_escalation
+int_000349,I want to talk to a human agent.,request_human_or_escalation
+int_000358,Please connect me with a supervisor.,request_human_or_escalation
+int_000362,I'd like to escalate this to someone else.,request_human_or_escalation
+int_000343,This isn't working — please get me a human.,request_human_or_escalation
+int_000344,I'm done with this bot. Put a real person on.,request_human_or_escalation
+int_000351,"Get me a human, please.",request_human_or_escalation
+int_000353,Please escalate my case to a specialist.,request_human_or_escalation
+int_000365,Please dispute the Best Buy payment from March 20th.,dispute_transaction
+int_000366,Please file a dispute on the double charge.,dispute_transaction
+int_000368,I'd like to dispute the duplicate $81 transaction.,dispute_transaction
+int_000369,Please open a dispute for that Apple transaction.,dispute_transaction
+int_000371,Please open a dispute for that Amazon transaction.,dispute_transaction
+int_000372,I want to contest the $687 transaction from February 11th.,dispute_transaction
+int_000374,I need to dispute the Amazon charge I was overbilled for.,dispute_transaction
+int_000375,I want to dispute the $414 charge from January 28th.,dispute_transaction
+int_000377,I'd like to formally dispute this payment.,dispute_transaction
+int_000379,Please dispute the Uber payment from March 20th.,dispute_transaction
+int_000380,I want to challenge the payment to Target.,dispute_transaction
+int_000381,I want to dispute the $29 charge from February 11th.,dispute_transaction
+int_000382,Open a formal dispute for the charge dated February 11th.,dispute_transaction
+int_000385,Can you dispute the charge I already reported?,dispute_transaction
+int_000389,I'd like to dispute the duplicate $161 transaction.,dispute_transaction
+int_000396,The email on my account was changed without me.,report_account_takeover
+int_000398,Someone logged into my account without permission.,report_account_takeover
+int_000401,My password was changed and it wasn't me.,report_account_takeover
+int_000402,I can't log in; it seems someone hijacked my account.,report_account_takeover
+int_000403,A stranger is logged into my banking app.,report_account_takeover
+int_000404,There was unauthorized access to my profile.,report_account_takeover
+int_000406,I'm locked out — someone took over my account.,report_account_takeover
+int_000412,Someone added a new device to my account.,report_account_takeover
+int_000414,Someone reset my credentials and I've lost access.,report_account_takeover
+int_000422,My account settings were changed by someone else.,report_account_takeover
+int_000423,I got an alert about a login I didn't make.,report_account_takeover
+int_000400,Someone logged into my account without permission.,report_account_takeover
+int_000408,My password was changed and it wasn't me.,report_account_takeover
+int_000410,The email on my account was changed without me.,report_account_takeover
+int_000411,I'm locked out — someone took over my account.,report_account_takeover
+int_000428,I can't find my card anywhere — I think it's gone.,report_lost_stolen_card
+int_000430,My physical card is gone and I need a new one.,report_lost_stolen_card
+int_000432,Someone stole my card while I was traveling.,report_lost_stolen_card
+int_000434,I left my card at Amazon and it's missing now.,report_lost_stolen_card
+int_000436,My card was pickpocketed on the train.,report_lost_stolen_card
+int_000438,I dropped my card and can't recover it.,report_lost_stolen_card
+int_000443,My credit card was stolen from my bag.,report_lost_stolen_card
+int_000445,I left my card at Best Buy and it's missing now.,report_lost_stolen_card
+int_000446,Someone took my wallet with my card in it.,report_lost_stolen_card
+int_000448,I lost my debit card somewhere yesterday.,report_lost_stolen_card
+int_000454,My card details were skimmed at an ATM.,report_lost_stolen_card
+int_000457,My card fell out of my pocket and I can't find it.,report_lost_stolen_card
+int_000460,I misplaced my card and want it blocked.,report_lost_stolen_card
+int_000440,I can't find my card anywhere — I think it's gone.,report_lost_stolen_card
+int_000441,My card was pickpocketed on the train.,report_lost_stolen_card

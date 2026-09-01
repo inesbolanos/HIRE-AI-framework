@@ -4,7 +4,7 @@
 
 **Note:** [Add any disclaimers about pending metrics, anonymization, or approval status]
 
-Feel add or free to remove any section according to your company data privacy.
+Feel free to add or remove any section according to your company data privacy.
 
 | | |
 |---|---|
@@ -93,7 +93,7 @@ Feel add or free to remove any section according to your company data privacy.
 
 | Evaluation | Description | Scoring |
 |----------|------------------|---------------------|
-| **Problem frequency** | [How often does this problem occur? Who does it impact?] | [🔴1-anually/🟣2-quarterly/🟠3-monthly/🟡2-weekly/🟢1-daily]
+| **Problem frequency** | [How often does this problem occur? Who does it impact?] | [🔴1-annually/🟣2-quarterly/🟠3-monthly/🟡4-weekly/🟢5-daily]
 | **Time savings** | [How much time does the agent save per use?] | [🔴1: 0-10% time saved /🟠2: 11-20% time saved/🟡 3: 21-50% time saved /🟢 4: more than 50% time saved]|
 | **ROI** | [Is the ROI positive? By how much?] | [🔴-5: negative/🟡0: neutral/🟢5: positive]|
 | **Strategic value** | [Does this agent create competitive advantage or strategic value?] | [🔴1-low /🟡2-medium/🟢 3-high] |
@@ -112,32 +112,37 @@ Feel add or free to remove any section according to your company data privacy.
 | **Chatbot** | [Example of a response-based approach] | [Why this wouldn't solve the problem] |
 | **Reasoning Agent** | [Example of a reasoning-based approach] | [Why this is the right level / or why it's overkill] |
 
-**Score: [Rules/Responses/Reasoning]-level task** ([Brief justification])
+**Score: [Rules/Responses/Reasoning]-level task** ([Brief justification]) — not scored numerically; R is a gate.
 
 ---
 
 ### E - Exposure & Execution
 
-**Risk Assessment:**
-
-**Worst-Case Scenario:** [Describe what happens if the agent makes the worst possible mistake] [🔴DO NOT BUILD : catastrophic impact/🟠-20: severe impact/🟡-10: moderate impact/🟢 -1: minor inconvenience]
-
-| Guardrails & Execution Boundaries | Description | Scoring |
+| Risk, Guardrails & Execution Boundaries | Description | Scoring |
 |----------|------------------|---------------------|
+| **Worst-case scenario** | [What happens if the agent makes the worst possible mistake?] | [🔴DO NOT BUILD: catastrophic/🟠-20 severe/🟡-10 moderate/🟢-1 minor] |
 | **Human-in-the-loop** | [Is there human approval before critical actions?] | [🔴-5 none/🟡0 partial/🟢5 ensured] |
-| **Deterministic security** | [Are security checks handled by rules, not AI?] | [🔴-5 AI/🟢5 rules] ||
+| **Deterministic security** | [Are security checks handled by rules, not AI?] | [🔴-5 AI/🟢5 rules] |
 | **Rollback capability** | [Can actions be undone?] | [🔴-5 no/🟢5 yes] |
 | **Audit trails** | [Is everything logged and traceable?] | [🔴-5 no/🟢5 yes] |
 | **Tenant isolation** | [Is customer data isolated? No cross-contamination?] | [🔴-5 no/🟢5 yes] |
-| **Read-only access** | [Does the agent only read data, or can it write/execute?] | [🔴-5 write access/🟢5 read-only] |
+| **Read-only access** | [Does the agent only read data, or can it write/execute?] | [🔴-10 write access/🟢10 read-only] |
 | **Failure mode** | [What happens if the agent fails? Is there a fallback?] | [🔴-5 no fallback/🟢5 fallback] |
+| | | **= [X]** |
 
-**Score: [X]/40** ([Brief note on risk mitigation])
-Note: if some of the guardrails or execution boundaries don't apply to your use case, adjust the score accordingly
+**Score: [X]/39** ([Brief note on risk mitigation])
+
+The worst case is a **row in this table, not a note above it** — it is mandatory and
+always negative (-1, -10 or -20), so the table should sum to the score you report.
+That is also why the best reachable E score is 39, not 40. If some guardrail or
+boundary doesn't apply to your use case, adjust the score and say so.
 
 ---
 
-### Total Score: [X]/78 [🟢HIRE/🟡TRAIN/🔴FIRE]
+### Total Score: [X]/77 [🟢HIRE/🟡TRAIN/🔴FIRE]
+
+H (max 21) + I (max 17) + E (max 39). R is a gate that decides *what* to build, so it scores 0.
+Bands: ≤30 DO NOT BUILD · 31-50 TRAIN · >50 HIRE.
 
 **Verdict:** [One sentence summary of the H.I.R.E. decision and why]
 

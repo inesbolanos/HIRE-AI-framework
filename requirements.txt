@@ -1,0 +1,11 @@
+# Everything lives in pyproject.toml — this installs the package plus the
+# optional Step 5 discovery stack and the test tooling.
+-e .[discovery,dev]
+
+# The database itself: SQLite (the zero-setup default) needs nothing extra.
+# For a warehouse, add YOUR platform's SQLAlchemy dialect, e.g.
+#   Databricks:  pip install databricks-sqlalchemy   # the dialect; pulls in the connector
+#   Snowflake:   pip install snowflake-sqlalchemy
+#   Postgres:    pip install psycopg
+# The LLM layers (Steps 2-5) then run inside that same warehouse via its own SQL
+# function, so there is no API key: your workspace credentials are the auth.

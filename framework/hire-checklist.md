@@ -2,7 +2,7 @@
 
 Use this checklist to evaluate whether an AI agent is the right solution for your business problem. Each section corresponds to one letter of the H.I.R.E. framework.
 
-In some sections, the decision is go no go, while in others the decision is defined by a scoring. In the end of this checklist you should have a comprehensive info that helps you take the hire, train or fire decison.
+In some sections the decision is go/no-go, while in others it's defined by a score. By the end of this checklist you should have enough to make the hire, train or fire decision.
 
 
 ## **H** - Human & Habits
@@ -65,7 +65,7 @@ In some sections, the decision is go no go, while in others the decision is defi
 
 ### ROI Calculation
 - [ ] **Problem Frequency**: how often does this problem occur?
-  - Scoring: 1-annualy, 2-quarterly, 3-monthly, 4-weekly, 5-daily
+  - Scoring: 1-annually, 2-quarterly, 3-monthly, 4-weekly, 5-daily
   
 - [ ] **Time Savings**: how much time will the agent save for this process?
   - Current time to resolve: _______ minutes/hours
@@ -125,6 +125,13 @@ If you checked 3+ boxes above, you likely need an **AI agent**.
 - Expecting a chatbot to reason and make decisions
 - No clear distinction between what's automated vs. what requires reasoning
 
+### Score: not scored
+
+R is a **gate, not a tally**: it decides *what to build* (automation, chatbot, or
+agent), which is a different kind of answer from "how well does this score". It
+contributes 0 to the total — a task that turns out to need automation shouldn't
+score lower, it should stop here.
+
 ## **E** - Exposure & Execution
 
 ### Risk Assessment
@@ -183,19 +190,36 @@ Note: if some of the execution boundaries don't apply to your use case, adjust t
 - No rollback or undo capability
 - Catastrophic failure would cause irreversible harm
 
-### Score : -60/40
+### Score range: -60 to 39
+
+The guardrails and execution boundaries total 40 at best (5×5 + 10 + 5), but the
+risk assessment above is **mandatory and always negative** — the options are -1,
+-10 and -20, with no zero, because a catastrophic worst case means don't build.
+So the best reachable E score is 40 - 1 = **39**. Include the risk score in the
+total: declaring a worst case and then not counting it is how a borderline agent
+scores as HIRE.
 
 ### Overall Assessment
-- Total H.I.R.E. score <30:  **DO NOT BUILD,** evaluate alternative solutions
+
+Total = H (max 21) + I (max 17) + E (max 39). R is a gate and scores 0, so the
+ceiling is **77**.
+
+- Total H.I.R.E. score ≤30:  **DO NOT BUILD,** evaluate alternative solutions
 - Total H.I.R.E. score 31-50:  **TRAIN,** improve weaknesses
 - Total H.I.R.E. score >50:  **HIRE,** an AI Agent is the right solution
 
 ### When we would FIRE this agent:
-Deprecation criteria examples:
-- User correction rate (UCR) spikes
-- Ping Pong Rate (PPR) constantly high
-- Do It Yourself Rates (DIY) above 70% x months after launch
-- Red Line Rate (RLR) above 20% (this threshold should be defined based on the risk tolerance)
+
+Deprecation criteria. Fire the agent when a metric sits in the **Critical** band of
+the [AI Agent Metrics Guide](agent-metrics/ai-agent-metrics.md) — that table holds the
+numbers, so they can't drift apart from this list. Tighten them for your own risk
+tolerance if needed. What each one means here:
+
+- **User Correction Rate (UCR)** in the critical band: the user is redoing the agent's work
+- **Ping Pong Rate (PPR)** critical, with IRR falling alongside it
+- **Do It Yourself Rate (DIY)** critical months after launch: users have routed around the agent
+- **Red Line Rate (RLR)** above 0%: any violation is a compliance event, so this is the one threshold not to relax
+- **Instant Resolution Rate (IRR)** critical: triage is adding a step instead of removing one
 - Maintenance costs exceed value delivered
 - A better solution is available
 
