@@ -19,7 +19,7 @@ Have you built an AI agent? We want to hear about it!
 
 
 **How to contribute**:
-1. Copy the [case study template](/case-studies/template.md)
+1. Copy the [case study template](case-studies/template.md)
 2. Fill in your story
 3. Submit a pull request to `case-studies/`
 
@@ -54,8 +54,9 @@ Make technical implementations better.
 
 **How to contribute**:
 1. Fork the repo
-2. Improve code in `framework/agent-metrics` (coming soon)
-3. Submit a pull request with clear explanations
+2. The pipeline lives in [`src/hire_pipeline/`](src/hire_pipeline/), with tests in [`tests/`](tests/) — run them with `pytest` (no credentials or network needed)
+3. Most behaviour is data-driven: category labels, routing rules and metric thresholds all live in [`taxonomy.yaml`](taxonomy.yaml), so adapting the framework to a different agent usually means editing that file rather than the code
+4. Submit a pull request with clear explanations
 
 
 ### 4. Challenge Our Assumptions
@@ -136,15 +137,15 @@ Tell us where we're wrong!
 
 ### 1. Fork and Clone
 ```bash
-git clone https://github.com/[your-username]/hire-ai-framework.git
-cd hire-ai-framework
+git clone https://github.com/[your-username]/HIRE-AI-framework.git
+cd HIRE-AI-framework
 git checkout -b feature/your-feature-name
 ```
 
 
 ### 2. Make Your Changes
 - Follow the guidelines above
-- Test your code
+- Run the test suite: `pip install -e '.[discovery,dev]' && pytest`
 - Update documentation
 
 
